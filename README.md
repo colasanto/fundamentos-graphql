@@ -19,4 +19,4 @@
 - [x] Trabalhando com parâmetros
 - [x] Resolver relacionando tipos
 - [x] Enum
-- [ ] Organização do código
+- [x] Organização do código

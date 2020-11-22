@@ -1,0 +1,23 @@
+enum UsuarioStatus {
+  ATIVO
+  INATIVO
+  BLOQUEADO
+}
+
+type Usuario {
+  # Podemos utilizar o tipo ID, porém ele é entendido como STRING e não como INT
+  id: Int! #ID!
+  nome: String!
+  email: String!
+  idade: Int
+  salario: Float
+  vip: Boolean
+  nascimento: Date
+  perfil: Perfil
+  status: UsuarioStatus
+}
+
+type Perfil {
+  id: Int!
+  nome: String!
+}
