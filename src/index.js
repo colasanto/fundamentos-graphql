@@ -2,7 +2,7 @@ import { ApolloServer, gql } from 'apollo-server'
 
 const usuarios = [
   {
-    id: '1',
+    id: 1,
     nome: 'Fulano da Silva',
     email: 'fulano@gmail.com',
     idade: 33,
@@ -10,7 +10,7 @@ const usuarios = [
     vip: false
   },
   {
-    id: '2',
+    id: 2,
     nome: 'Ciclano Rodrigues',
     email: 'ciclano@wmail.com',
     idade: 17,
@@ -18,7 +18,7 @@ const usuarios = [
     vip: true
   },
   {
-    id: '3',
+    id: 3,
     nome: 'Fulana Ciclana',
     email: 'fciclana@tmail.com',
     idade: 24,
@@ -27,11 +27,17 @@ const usuarios = [
   }
 ]
 
+const perfis = [
+  { id: 1, nome: 'Administrador' },
+  { id: 2, nome: 'Comum' }
+]
+
 const typeDefs = gql`
   scalar Date
 
   type Usuario {
-    id: ID!
+    # Podemos utilizar o tipo ID, porém ele é entendido como STRING e não como INT
+    id: Int! #ID!
     nome: String!
     email: String!
     idade: Int
@@ -48,6 +54,11 @@ const typeDefs = gql`
     descontoValor: Float
   }
 
+  type Perfil {
+    id: Int!
+    nome: String!
+  }
+
   # Pontos de entrada da API!
   type Query {
     ola: String!
@@ -56,31 +67,32 @@ const typeDefs = gql`
     produtoEmDestaque: Produto,
     numerosMegaSena: [Int!]!,
     usuarios: [Usuario],
+    usuario(id: Int): Usuario,
+    perfis: [Perfil],
+    perfil(id: Int): Perfil,
   }
 `
 
 const resolvers = {
   Usuario: {
     salario(parent) {
-      return parent.salario_real
+      return parent.salario_real 
+        ? parent.salario_real 
+        : parent.salario
     }
   },
 
   Produto: {
     precoComDesconto(parent) {
-      if (parent.desconto) {
-        return parent.preco * (1 - parent.desconto)
-      } else {
-        return parent.preco
-      }
+      return parent.desconto 
+        ? parent.preco * (1 - parent.desconto) 
+        : parent.preco
     },
 
     descontoValor(parent) {
-      if (parent.desconto) {
-        return (parent.preco - (parent.preco * (1 - parent.desconto)))
-      } else {
-        return parent.preco
-      }
+      return parent.desconto 
+        ? (parent.preco - (parent.preco * (1 - parent.desconto))) 
+        : 0
     }
   },
 
@@ -110,26 +122,47 @@ const resolvers = {
       return {
         nome: 'Caneta BIC Azul',
         preco: 1.50,
-        desconto: 0.10
+        desconto: .5
       }
     },
-    numerosMegaSena() {
-      const crescente = (a, b) => a - b;
 
-      const arr = [];
+    numerosMegaSena() {
+      const crescente = (a, b) => a - b
+      const arr = []
+
       while(arr.length < 6){
-          const r = Math.floor(Math.random() * 60) + 1;
+          const r = Math.floor(Math.random() * 60) + 1
 
           if (arr.indexOf(r) === -1) {
-            arr.push(r);
+            arr.push(r)
           }
       }
         
       return arr.sort(crescente)
     },
+
     usuarios() {
-      return usuarios ? usuarios : null
-    }
+      return usuarios
+    },
+
+    usuario(_, { id }) {
+      const selecionado = usuarios
+        .filter(user => user.id === id)
+
+      return selecionado ? selecionado[0] : null
+    },
+
+    perfis() {
+      return perfis
+    },
+
+    perfil(_, { id }) {
+      const perfilSelecionado = perfis
+        .filter(perfil => perfil.id === id)
+
+      return perfilSelecionado ? perfilSelecionado[0] : null
+    },
+    
   }
 }
 
