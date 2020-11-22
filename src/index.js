@@ -7,7 +7,8 @@ const usuarios = [
     email: 'fulano@gmail.com',
     idade: 33,
     salario: 1420.40,
-    vip: false
+    vip: false,
+    perfil_id: 1
   },
   {
     id: 2,
@@ -15,7 +16,8 @@ const usuarios = [
     email: 'ciclano@wmail.com',
     idade: 17,
     salario: 5785.10,
-    vip: true
+    vip: true,
+    perfil_id: 1
   },
   {
     id: 3,
@@ -23,7 +25,8 @@ const usuarios = [
     email: 'fciclana@tmail.com',
     idade: 24,
     salario: 3700.10,
-    vip: true
+    vip: true,
+    perfil_id: 2
   }
 ]
 
@@ -44,6 +47,7 @@ const typeDefs = gql`
     salario: Float
     vip: Boolean
     nascimento: Date
+    perfil: Perfil
   }
 
   type Produto {
@@ -79,6 +83,13 @@ const resolvers = {
       return parent.salario_real 
         ? parent.salario_real 
         : parent.salario
+    },
+
+    perfil(usuario) {
+      const perfiLSelecionado = perfis
+        .filter(perfil => perfil.id === usuario.perfil_id)
+      
+      return perfiLSelecionado ? perfiLSelecionado[0] : null
     }
   },
 
@@ -146,10 +157,10 @@ const resolvers = {
     },
 
     usuario(_, { id }) {
-      const selecionado = usuarios
+      const usuarioSelecionado = usuarios
         .filter(user => user.id === id)
 
-      return selecionado ? selecionado[0] : null
+      return usuarioSelecionado ? usuarioSelecionado[0] : null
     },
 
     perfis() {
