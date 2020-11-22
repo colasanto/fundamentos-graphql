@@ -15,8 +15,8 @@
 - [x] Tipos básicos
 - [x] Criando tipos customizados
 - [x] Resolvers
-- [ ] Trabalhando com arrays
-- [ ] Trabalhando com parâmetros
+- [x] Trabalhando com arrays
+- [x] Trabalhando com parâmetros
 - [ ] Resolver relacionando tipos
 - [ ] Fragment
 - [ ] Enum
