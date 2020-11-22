@@ -17,7 +17,6 @@
 - [x] Resolvers
 - [x] Trabalhando com arrays
 - [x] Trabalhando com parâmetros
-- [ ] Resolver relacionando tipos
-- [ ] Fragment
+- [x] Resolver relacionando tipos
 - [ ] Enum
 - [ ] Organização do código
