@@ -18,5 +18,5 @@
 - [x] Trabalhando com arrays
 - [x] Trabalhando com parâmetros
 - [x] Resolver relacionando tipos
-- [ ] Enum
+- [x] Enum
 - [ ] Organização do código

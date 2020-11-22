@@ -8,6 +8,7 @@ const usuarios = [
     idade: 33,
     salario: 1420.40,
     vip: false,
+    status: 'INATIVO',
     perfil_id: 1
   },
   {
@@ -17,6 +18,7 @@ const usuarios = [
     idade: 17,
     salario: 5785.10,
     vip: true,
+    status: 'BLOQUEADO',
     perfil_id: 1
   },
   {
@@ -26,6 +28,7 @@ const usuarios = [
     idade: 24,
     salario: 3700.10,
     vip: true,
+    status: 'ATIVO',
     perfil_id: 2
   }
 ]
@@ -38,6 +41,12 @@ const perfis = [
 const typeDefs = gql`
   scalar Date
 
+  enum UsuarioStatus {
+    ATIVO
+    INATIVO
+    BLOQUEADO
+  }
+
   type Usuario {
     # Podemos utilizar o tipo ID, porém ele é entendido como STRING e não como INT
     id: Int! #ID!
@@ -48,6 +57,12 @@ const typeDefs = gql`
     vip: Boolean
     nascimento: Date
     perfil: Perfil
+    status: UsuarioStatus
+  }
+
+  type Perfil {
+    id: Int!
+    nome: String!
   }
 
   type Produto {
@@ -56,11 +71,6 @@ const typeDefs = gql`
     desconto: Float
     precoComDesconto: Float
     descontoValor: Float
-  }
-
-  type Perfil {
-    id: Int!
-    nome: String!
   }
 
   # Pontos de entrada da API!
