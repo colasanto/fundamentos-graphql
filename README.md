@@ -5,7 +5,7 @@
 </p>
 
 <div align="center">
-  <h3>Repositório para estudo de GraphQL</h3>
+  <h3>Repositório para estudo dos fundamentos de GraphQL</h3>
 </div>
 
 #### Tópicos abordados
